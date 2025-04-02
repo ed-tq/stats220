@@ -1,0 +1,65 @@
+---
+title: My dynamic report
+output: html_fragment
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, error=FALSE)
+
+```
+
+```{css}
+
+```
+
+## Tracking Sleep Hours
+
+```{r}
+library(tidyverse)
+
+#csv
+logged_data <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQByeOCYrBnyYE7RZhNSAkB_yso3fg_ATXoGHFa-b8_kOCxkJlKmwicf-0hduwGoScUoBxqlAjY3ye8/pub?gid=1139668992&single=true&output=csv")
+
+latest_data <- logged_data %>%
+  rename(observed_days = 1,
+         hours_of_sleep = 2,
+         moreThan_6Hours_phone_ScreenOn = 3,
+         yesterday_activities = 4)
+
+#bar charts
+
+#bar chart 1
+ggplot(data = latest_data) +
+  geom_bar(aes(x = hours_of_sleep), fill = "#66b2b2") +
+  labs(title = "Hours of Sleep Over 20 days",
+       x = "Sleep Duration (hrs.)",
+       y = "Frequency")
+
+#bar chart 2
+ggplot(data = latest_data) +
+  geom_bar(aes(x = hours_of_sleep, fill = moreThan_6Hours_phone_ScreenOn)) +
+  labs(title = "Comparing Hours Slept and Screen time On Phone",
+       x = "Sleep Duration (hrs.)",
+       y = "Total Occurances")
+
+#bar chart 3
+activities <- latest_data %>%
+  separate_rows(yesterday_activities, sep = ", ")
+
+activities %>%
+  ggplot() +
+  geom_bar(aes(y = yesterday_activities), fill = "#66b2b2") +
+  labs(title = "Productivity over 20 days",
+       x = "Total Count",
+       y = "Activity")
+
+#summary data
+paste0("The minimum hours slept is ", 
+      min(latest_data$hours_of_sleep), 
+      ", and the maximum is ", 
+      max(latest_data$hours_of_sleep), 
+      ". From 20 observations, the average amount of sleep is ",
+      mean(latest_data$hours_of_sleep),
+      " hours.")
+
+```
