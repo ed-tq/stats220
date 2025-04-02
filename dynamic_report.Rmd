@@ -38,7 +38,7 @@ ggplot(data = latest_data) +
 #bar chart 2
 ggplot(data = latest_data) +
   geom_bar(aes(x = hours_of_sleep, fill = moreThan_6Hours_phone_ScreenOn)) +
-  labs(title = "Comparing Hours Slept and Screen time On Phone",
+  labs(title = "Comparing Hours Slept and Screen Time On Phone",
        x = "Sleep Duration (hrs.)",
        y = "Total Occurances")
 
