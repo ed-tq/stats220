@@ -15,6 +15,7 @@ knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, error=FALSE)
 ## Tracking Sleep Hours
 
 ```{r}
+
 library(tidyverse)
 
 #csv
@@ -23,7 +24,7 @@ logged_data <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQByeOC
 latest_data <- logged_data %>%
   rename(observed_days = 1,
          hours_of_sleep = 2,
-         moreThan_6Hours_phone_ScreenOn = 3,
+         moreThan_6Hours_ScreenTime = 3,
          yesterday_activities = 4)
 
 #bar charts
@@ -37,7 +38,7 @@ ggplot(data = latest_data) +
 
 #bar chart 2
 ggplot(data = latest_data) +
-  geom_bar(aes(x = hours_of_sleep, fill = moreThan_6Hours_phone_ScreenOn)) +
+  geom_bar(aes(x = hours_of_sleep, fill = moreThan_6Hours_ScreenTime)) +
   labs(title = "Comparing Hours Slept and Screen Time On Phone",
        x = "Sleep Duration (hrs.)",
        y = "Total Occurances")
@@ -55,11 +56,11 @@ activities %>%
 
 #summary data
 paste0("The minimum hours slept is ", 
-      min(latest_data$hours_of_sleep), 
-      ", and the maximum is ", 
-      max(latest_data$hours_of_sleep), 
-      ". From 20 observations, the average amount of sleep is ",
-      mean(latest_data$hours_of_sleep),
-      " hours.")
+       min(latest_data$hours_of_sleep), 
+       ", and the maximum is ", 
+       max(latest_data$hours_of_sleep), 
+       ". From 20 observations, the average amount of sleep is ",
+       mean(latest_data$hours_of_sleep),
+       " hours.")
 
 ```
